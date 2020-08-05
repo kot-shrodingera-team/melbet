@@ -9,9 +9,10 @@ import checkStakeStatus from './worker_callbacks/checkStakeStatus';
 import initialize from './initialization';
 import afterSuccesfulStake from './worker_callbacks/afterSuccesfulStake';
 import fastLoad from './fastLoad';
+import { version } from '../package.json';
 
 (async (): Promise<void> => {
-  log('Загрузка страницы', 'steelblue');
+  log(`Загрузка страницы (${version})`, 'steelblue');
   if (!worker.IsShowStake) {
     initialize();
   } else {
