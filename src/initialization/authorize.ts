@@ -1,5 +1,5 @@
-import { authorizeGenerator } from '@kot-shrodingera-team/germes-generators/initialization';
-import { updateBalance } from '../stake_info/getBalance';
+import authorizeGenerator from '@kot-shrodingera-team/germes-generators/initialization/authorize';
+import { updateBalance, balanceReady } from '../stake_info/getBalance';
 
 const authorize = authorizeGenerator({
   openForm: {
@@ -12,6 +12,7 @@ const authorize = authorizeGenerator({
   submitButtonSelector: 'a.enter',
   loginedWait: {
     loginedSelector: '.acc-open',
+    balanceReady,
     updateBalance,
   },
 });

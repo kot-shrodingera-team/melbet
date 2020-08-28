@@ -1,5 +1,5 @@
-import { checkCouponLoadingGenerator } from '@kot-shrodingera-team/germes-generators/worker_callbacks';
 import { log } from '@kot-shrodingera-team/germes-utils';
+import checkCouponLoadingGenerator from '@kot-shrodingera-team/germes-generators/worker_callbacks/checkCouponLoading';
 import { getDoStakeTime } from '../stake_info/doStakeTime';
 
 const check = () => {

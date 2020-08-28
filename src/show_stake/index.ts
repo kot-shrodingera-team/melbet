@@ -3,6 +3,7 @@ import {
   log,
   sleep,
   awaiter,
+  domFullLoaded,
 } from '@kot-shrodingera-team/germes-utils';
 import clearCoupon from './clearCoupon';
 import getStakeCount from '../stake_info/getStakeCount';
@@ -10,11 +11,23 @@ import { updateBalance } from '../stake_info/getBalance';
 import setBetAcceptMode from './setBetAcceptMode';
 import getMaximumStake from '../stake_info/getMaximumStake';
 
+let couponOpenning = false;
+
+export const isCouponOpenning = (): boolean => couponOpenning;
+
+const jsFail = (message = ''): void => {
+  if (message) {
+    log(message, 'red');
+  }
+  couponOpenning = false;
+  worker.JSFail();
+};
+
 const showStake = async (): Promise<void> => {
-  const couponLoaded = await getElement('#cupon_block');
+  couponOpenning = true;
+  const couponLoaded = document.querySelector('#cupon_block');
   if (!couponLoaded) {
-    log('Купон не загрузился', 'crimson');
-    worker.JSFail();
+    jsFail('Купон не найден');
     return;
   }
   const [gameId, eventId, param] = worker.BetId.split('|');
@@ -26,19 +39,16 @@ const showStake = async (): Promise<void> => {
   const betSelector = `[data-gameid="${gameId}"][data-eventid="${eventId}"][data-param="${realParam}"]`;
   const betButton = (await getElement(betSelector)) as HTMLElement;
   if (!betButton) {
-    log('Ставка не найдена', 'red');
-    worker.JSFail();
+    jsFail('Ставка не найдена');
     return;
   }
   if (betButton.getAttribute('data-block') === 'true') {
-    log('Ставка заблокирована', 'red');
-    worker.JSFail();
+    jsFail('Ставка заблокирована');
     return;
   }
   const couponCleared = await clearCoupon();
   if (!couponCleared) {
-    log('Не удалось очистить купон', 'red');
-    worker.JSFail();
+    jsFail('Не удалось очистить купон');
     return;
   }
   updateBalance();
@@ -46,19 +56,23 @@ const showStake = async (): Promise<void> => {
   betButton.click();
   const betAdded = await awaiter(() => getStakeCount() === 1);
   if (!betAdded) {
-    log('Ставка не попала в купон', 'red');
-    worker.JSFail();
+    jsFail('Ставка не попала в купон');
     return;
   }
   const maxLoaded = await awaiter(() => getMaximumStake() !== 0);
   if (!maxLoaded) {
-    log('Максимум не появился', 'red');
-    worker.JSFail();
+    jsFail('Максимум не появился');
     return;
   }
   log('Ставка успешно открыта', 'green');
   setBetAcceptMode();
+  couponOpenning = false;
   worker.JSStop();
+};
+
+export const initialShowStake = async (): Promise<void> => {
+  await domFullLoaded();
+  showStake();
 };
 
 export default showStake;
