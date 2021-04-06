@@ -25,6 +25,10 @@ const jsFail = (message = ''): void => {
 
 const showStake = async (): Promise<void> => {
   couponOpenning = true;
+  log(
+    `Открываем ставку:\n${worker.TeamOne} vs ${worker.TeamTwo}\n${worker.BetName}`,
+    'steelblue'
+  );
   const couponLoaded = document.querySelector('#cupon_block');
   if (!couponLoaded) {
     jsFail('Купон не найден');
@@ -37,6 +41,7 @@ const showStake = async (): Promise<void> => {
   //   `[data-gameid="${gameId}"][data-eventid="${eventId}"][data-param="${realParam}"]` +
   //   `, [data-gameid="${gameId}"][data-eventid="${alternativeEventId}"][data-param="${realParam}"]`;
   const betSelector = `[data-gameid="${gameId}"][data-eventid="${eventId}"][data-param="${realParam}"]`;
+  log(`betSelector = '${betSelector}'`, 'white', true);
   const betButton = (await getElement(betSelector)) as HTMLElement;
   if (!betButton) {
     jsFail('Ставка не найдена');

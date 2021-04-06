@@ -34,7 +34,7 @@ const checkStakeStatus = (): boolean => {
   const alertMessage = alertMessageElement.textContent.trim();
   log(`Ставка не принята (Текст сообщения: "${alertMessage}")`, 'tomato');
   const dialogButtons = [
-    ...document.querySelectorAll('.ui-dialog-buttonset button'),
+    ...document.querySelectorAll('.ui-dialog-buttonset button')
   ];
   const okButton = dialogButtons.find(
     (button) =>
