@@ -8,6 +8,13 @@ const check = () => {
     log('Обработка ставки завершена (всплывающее окно)', 'orange');
     return false;
   }
+  const lockedBet = document.querySelector(
+    '.cuponBetList li .cuponBetblock.locked'
+  );
+  if (lockedBet) {
+    log('Обработка ставки завершена (ставка заблокирована)', 'orange');
+    return false;
+  }
   const loaderIcon = document.querySelector('#goPutBetLoad') as HTMLElement;
   if (loaderIcon && loaderIcon.style.display === 'block') {
     log('Обработка ставки (есть иконка обработки)', 'tan');

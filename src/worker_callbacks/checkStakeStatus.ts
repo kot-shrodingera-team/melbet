@@ -2,6 +2,13 @@ import { log } from '@kot-shrodingera-team/germes-utils';
 import { updateBalance } from '../stake_info/getBalance';
 
 const checkStakeStatus = (): boolean => {
+  const lockedBet = document.querySelector(
+    '.cuponBetList li .cuponBetblock.locked'
+  );
+  if (lockedBet) {
+    log('Ставка не принята (заблокирована)', 'orange');
+    return false;
+  }
   const dialog = document.querySelector('.ui-dialog') as HTMLElement;
   if (!dialog) {
     log(
@@ -34,7 +41,7 @@ const checkStakeStatus = (): boolean => {
   const alertMessage = alertMessageElement.textContent.trim();
   log(`Ставка не принята (Текст сообщения: "${alertMessage}")`, 'tomato');
   const dialogButtons = [
-    ...document.querySelectorAll('.ui-dialog-buttonset button')
+    ...document.querySelectorAll('.ui-dialog-buttonset button'),
   ];
   const okButton = dialogButtons.find(
     (button) =>
