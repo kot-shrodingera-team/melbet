@@ -17,6 +17,7 @@ const getParameter = (): number => {
 
   const singleParameterRegexArray = [
     ri`^Тотал [МБ] (${parameterRegex})$`,
+    ri`^Тотал (${parameterRegex}) [МБ]$`,
     ri`^Тотал \((${parameterRegex})\) [МБ]$`,
     ri`^Ф[12] (${parameterRegex})$`,
     ri`^Ф[12] \((${parameterRegex})\)$`,
