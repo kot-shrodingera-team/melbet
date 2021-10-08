@@ -19,12 +19,12 @@ const getParameter = (): number => {
     ri`^Тотал [МБ] (${parameterRegex})$`,
     ri`^Тотал (${parameterRegex}) [МБ]$`,
     ri`^Тотал \((${parameterRegex})\) [МБ]$`,
+    ri`^Тотал (${parameterRegex}) (?:меньше|больше|равно) \(3way\)$`,
     ri`^Ф[12] (${parameterRegex})$`,
     ri`^Ф[12] \((${parameterRegex})\)$`,
     ri`^Индивидуальный тотал [12] (?:Меньше|Больше) \((${parameterRegex})\)$`,
     ri`^Индивидуальный тотал [12]-го \((${parameterRegex})\) [МБ]$`,
-    ri`^Тотал (${parameterRegex}) равно (3way)$`,
-    ri`^Индивидуальный тотал [12] (3way) Равно (\d+)$`,
+    ri`^Индивидуальный тотал [12] \(3way\) (?:Меньше|Больше|Равно) (\d+)$`,
     ri`^Игрок[12], индивидуальный тотал выстрелов \((${parameterRegex})\) [МБ]$`,
   ];
 
